@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marcos Japan-Countdown</title>
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Kosugi+Maru&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffd9ec;--dot:#ffb3d6;--ink:#4a1d3d;--card:#fffaf3;--pink:#ff5fa8;--mint:#7fe5c4;--sun:#ffe66d;--sky:#9fdcff;--red:#e8202f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2b1033;--dot:#431a4d;--ink:#ffe9f4;--card:#4a2056}}
+:root[data-theme="dark"]{--bg:#2b1033;--dot:#431a4d;--ink:#ffe9f4;--card:#4a2056}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:"Kosugi Maru","Hiragino Maru Gothic ProN",system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:radial-gradient(var(--dot) 18%,transparent 20%);background-size:26px 26px;overflow-x:hidden}
+h1,h2,.num{font-family:"Mochiy Pop One","Hiragino Maru Gothic ProN",system-ui,sans-serif;font-weight:400}
+main{max-width:760px;margin:0 auto;padding:14px 14px 60px}
+.bar{background:var(--ink);color:var(--sun);overflow:hidden;white-space:nowrap;padding:7px 0;font-weight:700}
+.bar span{display:inline-block;padding-left:100%;animation:run 28s linear infinite}
+@keyframes run{to{transform:translateX(-100%)}}
+.card{background:var(--card);border:3px solid var(--ink);border-radius:22px;box-shadow:6px 6px 0 var(--pink);padding:18px;margin:22px 0}
+.hero{text-align:center;padding:0;overflow:hidden}
+.hero svg{display:block;width:100%;height:auto}
+.hero .t{padding:6px 16px 20px}
+h1{font-size:clamp(26px,7vw,44px);margin:0;line-height:1.15;color:var(--pink);text-shadow:3px 3px 0 var(--ink)}
+.jp{font-size:15px;margin:6px 0 0;letter-spacing:.2em}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.cd div{background:var(--sun);color:#4a1d3d;border:3px solid var(--ink);border-radius:16px;padding:10px 2px}
+.cd:nth-child(n) div:nth-child(2){background:var(--mint)}.cd div:nth-child(3){background:var(--sky)}.cd div:nth-child(4){background:#ffc1d9}
+.num{font-size:clamp(26px,9vw,46px);display:block;line-height:1}
+.lbl{font-size:13px}
+.neko{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;font-size:15px}
+.neko b{font-size:54px;line-height:1}
+.wave{display:inline-block;font-size:34px;transform-origin:70% 80%;animation:wave 1.4s ease-in-out infinite}
+@keyframes wave{50%{transform:rotate(-25deg)}}
+h2{font-size:22px;margin:0 0 4px}
+.sub{margin:0 0 12px;font-size:14px}
+.stickers{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.st{border:3px solid var(--ink);border-radius:14px;padding:8px 12px;font-weight:700;font-size:14px;transform:rotate(-3deg);background:#fff;color:#222}
+.st:nth-child(even){transform:rotate(3deg)}
+.s7{background:linear-gradient(#f58220 0 28%,#00833e 28% 56%,#ee1c25 56% 72%,#fff 72%);padding-bottom:12px;color:#fff;text-shadow:1px 1px 0 #000}
+.don{background:#ffe600;color:#d4002a}
+.poc{background:linear-gradient(90deg,#fff,#cfeaff);color:#0066c8}
+.oni{background:#fff}
+.bar2{height:16px;border:3px solid var(--ink);border-radius:99px;background:#fff;overflow:hidden;margin:6px 0 12px}
+.bar2 i{display:block;height:100%;width:0;background:repeating-linear-gradient(45deg,var(--pink) 0 10px,#ff93c4 10px 20px);transition:width .4s}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li label{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2px solid var(--ink);border-radius:14px;background:#fff;color:#3a1530;cursor:pointer;font-size:16px}
+li label:has(input:checked){background:var(--mint);text-decoration:line-through;text-decoration-thickness:2px}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--pink);flex:none}
+li label:focus-within,button:focus-visible,input[type=text]:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.add{display:flex;gap:8px;margin-top:12px}
+.add input{flex:1;min-width:0;font:inherit;padding:10px 12px;border:3px solid var(--ink);border-radius:14px;background:#fff;color:#3a1530}
+button{font:inherit;font-weight:700;border:3px solid var(--ink);border-radius:14px;background:var(--sun);color:#4a1d3d;padding:10px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ph{background:#fff;color:#3a1530;border:2px dashed var(--ink);border-radius:14px;padding:12px;margin-bottom:12px;min-height:76px}
+.ph b{font-size:20px;display:block}
+.petal{position:fixed;top:-30px;z-index:5;pointer-events:none;animation:fall linear infinite}
+@keyframes fall{to{transform:translate(60px,110vh) rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.petal{display:none}.bar span,.wave{animation:none}.bar span{padding-left:0}}
+li.rt{border-left:6px solid var(--pink);padding:8px 12px;background:#fff;color:#3a1530;border-radius:0 12px 12px 0;font-size:16px}
+.burst{position:fixed;z-index:9;pointer-events:none;font-size:22px;transition:transform .8s ease-out,opacity .8s}
+#cat{cursor:pointer}
+.yen{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.yen label{font-size:14px;display:grid;gap:4px}
+.yen input{font:inherit;padding:10px;border:3px solid var(--ink);border-radius:14px;background:#fff;color:#3a1530;min-width:0}
+.big{font-size:26px;text-align:center;margin:6px 0 12px}
+footer{text-align:center;font-size:14px}
+</style>
+</head>
+<body>
+<div class="bar"><span>🍙 Onigiri 🏪 7-Eleven 🐧 Donki Hote 🥤 Pocari Sweat 🗻 Fuji 🏯 Pagode 🍜 Ramen 🐱 Maneki-neko 🍛 Curry ⛩️ Fushimi Inari 🌸 Sakura 🎌 &nbsp;&nbsp;</span></div>
+<main>
+<section class="card hero">
+<svg viewBox="0 0 400 190" role="img" aria-label="Fuji, Pagode und Sonne">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb3d6"/><stop offset="1" stop-color="#fff2c2"/></linearGradient></defs>
+<rect width="400" height="190" fill="url(#sky)"/>
+<circle cx="300" cy="62" r="34" fill="#e8202f"/>
+<path d="M20 190 L150 40 L280 190Z" fill="#6c8cff" stroke="#4a1d3d" stroke-width="3" stroke-linejoin="round"/>
+<path d="M120 74 L150 40 L180 74 L166 68 L150 80 L134 68Z" fill="#fff" stroke="#4a1d3d" stroke-width="3" stroke-linejoin="round"/>
+<g stroke="#4a1d3d" stroke-width="3" stroke-linejoin="round">
+<rect x="290" y="120" width="60" height="50" fill="#e8202f"/>
+<path d="M280 124 L320 100 L360 124Z" fill="#3a2a5a"/>
+<rect x="300" y="86" width="40" height="18" fill="#e8202f"/>
+<path d="M293 90 L320 72 L347 90Z" fill="#3a2a5a"/>
+<rect x="308" y="58" width="24" height="14" fill="#e8202f"/>
+<path d="M302 62 L320 46 L338 62Z" fill="#3a2a5a"/>
+<path d="M320 46 V34" fill="none"/>
+<rect x="0" y="170" width="400" height="20" fill="#7fe5c4"/>
+</g>
+<text x="36" y="40" font-size="22">☁️</text><text x="210" y="30" font-size="18">☁️</text><text x="90" y="160" font-size="22">🌸</text><text x="230" y="168" font-size="22">🌸</text>
+</svg>
+<div class="t">
+<h1>Marcos Japan-Abenteuer</h1>
+<p class="jp">マルコの日本旅行 🎌</p>
+<div class="cd" id="cd" aria-live="off"></div>
+<p id="msg" style="margin:14px 0 0;font-weight:700"></p>
+<div class="neko"><b id="cat" role="button" tabindex="0" aria-label="Maneki-neko anklicken">🐱</b><span class="wave">🤚</span><span>招き猫 winkt dir zu: Abflug am 5. Dezember!</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Konbini-Glück 🏪</h2>
+<p class="sub">Was Marco in Japan unbedingt sehen muss.</p>
+<div class="stickers">
+<div class="st s7">7-Eleven</div><div class="st don">🐧 ドン・キ Donki</div><div class="st poc">🥤 ポカリ Pocari Sweat</div><div class="st oni">🍙 おにぎり</div><div class="st">🍜 ラーメン</div><div class="st">🗻 富士山</div>
+</div>
+</section>
+
+<section class="card">
+<h2>🍜 Speisekarte</h2>
+<p class="sub">Alles, was Marco essen will. <span id="fc"></span></p>
+<div class="bar2"><i id="fb"></i></div>
+<ul id="food"></ul>
+<div class="add"><input type="text" id="fi" placeholder="Eigenes Gericht hinzufügen" aria-label="Eigenes Gericht"><button id="fa">Hinzufügen</button></div>
+</section>
+
+<section class="card">
+<h2>⛩️ To-do-Liste: Besichtigen</h2>
+<p class="sub">Orte, die auf die Liste müssen. <span id="sc"></span></p>
+<div class="bar2"><i id="sb"></i></div>
+<ul id="sights"></ul>
+<div class="add"><input type="text" id="si" placeholder="Eigenen Ort hinzufügen" aria-label="Eigener Ort"><button id="sa">Hinzufügen</button></div>
+</section>
+
+<section class="card">
+<h2>🗺️ Reiseroute</h2>
+<p class="sub">Marcos Stationen. Ergänze Orte mit Datum.</p>
+<ul id="route"></ul>
+<div class="add"><input type="text" id="ri" placeholder="z. B. 12.12. Hakone" aria-label="Neue Station"><button id="ra">Hinzufügen</button></div>
+</section>
+
+<section class="card">
+<h2>🎒 Packliste</h2>
+<p class="sub">Nichts vergessen. <span id="kc"></span></p>
+<div class="bar2"><i id="kb"></i></div>
+<ul id="pack"></ul>
+<div class="add"><input type="text" id="ki" placeholder="Eigenes Teil hinzufügen" aria-label="Eigenes Teil"><button id="ka">Hinzufügen</button></div>
+</section>
+
+<section class="card">
+<h2>💴 Yen-Rechner</h2>
+<p class="sub">Kurs bei Bedarf anpassen (1 € = ? ¥).</p>
+<div class="yen"><label>Euro<input type="number" id="eu" value="50" min="0" inputmode="decimal"></label><label>Kurs<input type="number" id="kr" value="175" min="0" inputmode="decimal"></label></div>
+<div class="big num" id="yr"></div>
+<p class="sub">Grobe Richtwerte in Euro:</p>
+<ul id="ex"></ul>
+</section>
+
+<section class="card">
+<h2>🗣️ Japanisch für unterwegs</h2>
+<div class="ph" id="ph" aria-live="polite">Tippe auf den Button für ein Wort.</div>
+<button id="pb">Neues Wort 🎲</button>
+</section>
+
+<footer>Gemacht für Marco 💖 Haken werden in diesem Browser gespeichert.</footer>
+</main>
+<script>
+(function(){
+var T=new Date(2026,11,5,0,0,0).getTime();
+var cd=document.getElementById("cd"),msg=document.getElementById("msg"),hold=0;
+function p(n){return String(n).padStart(2,"0")}
+function tick(){
+var d=T-Date.now();
+if(d<=0){cd.innerHTML="";if(Date.now()>hold)msg.textContent="Tag "+(Math.floor(-d/864e5)+1)+" in Japan 🎌🍙 Viel Spaß, Marco!";return}
+var D=Math.floor(d/864e5),H=Math.floor(d%864e5/36e5),M=Math.floor(d%36e5/6e4),S=Math.floor(d%6e4/1e3);
+cd.innerHTML=[[D,"Tage"],[p(H),"Std."],[p(M),"Min."],[p(S),"Sek."]].map(function(x){return '<div><span class="num">'+x[0]+'</span><span class="lbl">'+x[1]+'</span></div>'}).join("");
+if(Date.now()>hold)msg.textContent="Noch "+D+" Mal schlafen 😴🌸";
+}
+tick();setInterval(tick,1000);
+
+var FOOD=[["🍜","Ramen (Tonkotsu!)"],["🍛","Japanisches Curry"],["🍙","Onigiri aus dem Konbini"],["🍣","Sushi vom Fließband"],["🥟","Gyoza"],["🐙","Takoyaki"],["🍤","Tonkatsu oder Tempura"],["🥪","Eier-Sando vom 7-Eleven"],["🍵","Matcha-Eis"],["🥤","Pocari Sweat vom Automaten"],["🍡","Dango und Mochi"],["🦀","Sapporo: Miso-Ramen und Krabbe"]];
+var SIGHTS=[["🗼","Tokio: Shibuya Crossing"],["🐧","Donki-Shopping-Tour"],["⛩️","Kyoto: Fushimi Inari"],["🗻","Fuji-Blick am Kawaguchiko"],["🦌","Nara: Rehe füttern"],["🏯","Osaka: Dotonbori und Burg"],["❄️","Sapporo: Lichter im Odori-Park"],["🏯","Eine Pagode besuchen"],["🐱","Katzen-Café oder Neko-Insel"]];
+var S={c:{},x:{food:[],sights:[]}};
+try{var r=localStorage.getItem("marco-japan");if(r){var o=JSON.parse(r);if(o&&o.c&&o.x)S=o}}catch(e){}
+function save(){try{localStorage.setItem("marco-japan",JSON.stringify(S))}catch(e){}}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function build(k,base,ul,bar,cnt){
+var items=base.concat(S.x[k].map(function(t){return ["✨",t]}));
+var el=document.getElementById(ul);
+el.innerHTML=items.map(function(it,i){var id=k+":"+it[1];return '<li><label><input type="checkbox" data-id="'+esc(id)+'"'+(S.c[id]?" checked":"")+'><span>'+it[0]+" "+esc(it[1])+"</span></label></li>"}).join("");
+function upd(){var n=el.querySelectorAll("input:checked").length;document.getElementById(bar).style.width=(items.length?n/items.length*100:0)+"%";document.getElementById(cnt).textContent=n+" von "+items.length+" geschafft"}
+el.onchange=function(e){S.c[e.target.getAttribute("data-id")]=e.target.checked;save();upd();if(e.target.checked)fx(e.target)};
+upd();
+}
+function draw(){S.x.pack=S.x.pack||[];S.x.route=S.x.route||[];build("food",FOOD,"food","fb","fc");build("sights",SIGHTS,"sights","sb","sc");build("pack",PACK,"pack","kb","kc");document.getElementById("route").innerHTML=ROUTE.concat(S.x.route).map(function(t){return '<li class="rt">'+esc(t)+'</li>'}).join("")}
+function wire(k,inp,btn){
+function add(){var i=document.getElementById(inp),v=i.value.trim();if(!v)return;S.x[k].push(v);i.value="";save();draw()}
+document.getElementById(btn).onclick=add;
+document.getElementById(inp).onkeydown=function(e){if(e.key==="Enter")add()};
+}
+var PACK=[["🛂","Reisepass"],["🔌","Reiseadapter (Typ A)"],["📶","Pocket-WLAN oder eSIM"],["💴","Bargeld in Yen"],["🚇","Suica- oder Pasmo-Karte"],["🧥","Warme Jacke (Dezember, Sapporo!)"],["👟","Bequeme Laufschuhe"],["🔋","Powerbank"],["🎒","Platz im Koffer für die Donki-Beute"]];
+var ROUTE=["5. Dez: Abflug ✈️","Tokio 🗼","Kyoto ⛩️","Osaka 🏯","Sapporo ❄️"];
+wire("food","fi","fa");wire("sights","si","sa");wire("pack","ki","ka");wire("route","ri","ra");draw();
+function yen(){var e=parseFloat(document.getElementById("eu").value)||0,k=parseFloat(document.getElementById("kr").value)||0;document.getElementById("yr").textContent=Math.round(e*k).toLocaleString("de-DE")+" ¥";document.getElementById("ex").innerHTML=[["🍙 Onigiri",150],["🥤 Pocari Sweat",160],["🍜 Ramen",1100],["🚄 Shinkansen Tokio–Kyoto",14000]].map(function(x){return '<li class="rt">'+x[0]+": ca. "+x[1]+" ¥ = "+(k?(x[1]/k).toFixed(2).replace(".",","):"–")+" €</li>"}).join("")}
+document.getElementById("eu").oninput=yen;document.getElementById("kr").oninput=yen;yen();
+var cat=document.getElementById("cat");
+function meow(){hold=Date.now()+4000;msg.textContent="ニャー! 🪙 Die Glückskatze winkt Marco nach Japan!";fx(cat,["🪙","💖","🐱","✨"])}
+cat.onclick=meow;cat.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();meow()}};
+
+function fx(el,em){var r=el.getBoundingClientRect(),a=em||["🌸","✨","🍙","⭐"];
+for(var i=0;i<8;i++){var s=document.createElement("span");s.className="burst";s.textContent=a[i%a.length];s.setAttribute("aria-hidden","true");s.style.left=(r.left+r.width/2)+"px";s.style.top=(r.top+r.height/2)+"px";document.body.appendChild(s);(function(s,i){setTimeout(function(){s.style.transform="translate("+(Math.cos(i*.785)*70)+"px,"+(Math.sin(i*.785)*70-30)+"px) rotate(180deg)";s.style.opacity="0"},20);setTimeout(function(){s.remove()},900)})(s,i)}
+try{var C=new (window.AudioContext||window.webkitAudioContext)(),o=C.createOscillator(),g=C.createGain();o.type="triangle";o.frequency.value=660;o.connect(g);g.connect(C.destination);g.gain.setValueAtTime(.12,C.currentTime);g.gain.exponentialRampToValueAtTime(.001,C.currentTime+.25);o.start();o.stop(C.currentTime+.25);o.onended=function(){C.close()}}catch(e){}}
+var W=[["ありがとう","Arigatō","Danke"],["すみません","Sumimasen","Entschuldigung / Hallo, bitte"],["おいしい！","Oishii!","Lecker!"],["いくらですか？","Ikura desu ka?","Wie viel kostet das?"],["トイレはどこですか？","Toire wa doko desu ka?","Wo ist die Toilette?"],["ラーメンをください","Rāmen o kudasai","Einmal Ramen, bitte"],["かんぱい！","Kanpai!","Prost!"],["いただきます","Itadakimasu","Guten Appetit"],["ごちそうさまでした","Gochisōsama deshita","Danke für das Essen"],["かわいい！","Kawaii!","Süß!"]];
+var pb=document.getElementById("pb"),ph=document.getElementById("ph"),last=-1;
+pb.onclick=function(){var i;do{i=Math.floor(Math.random()*W.length)}while(i===last);last=i;var w=W[i];ph.innerHTML="<b>"+w[0]+"</b>"+w[1]+" – "+w[2]};
+
+var pet=["🌸","🌸","💮","🌸"];
+for(var i=0;i<12;i++){var s=document.createElement("span");s.className="petal";s.textContent=pet[i%4];s.setAttribute("aria-hidden","true");s.style.left=(Math.random()*100)+"vw";s.style.fontSize=(14+Math.random()*12)+"px";s.style.animationDuration=(9+Math.random()*9)+"s";s.style.animationDelay=(-Math.random()*14)+"s";document.body.appendChild(s)}
+})();
+</script>
+</body>
+</html>
