@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Onigiri-Fänger</title>
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Kosugi+Maru&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffd9ec;--dot:#ffb3d6;--ink:#4a1d3d;--card:#fffaf3;--pink:#ff5fa8;--sun:#ffe66d;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2b1033;--dot:#431a4d;--ink:#ffe9f4;--card:#4a2056}}
+:root[data-theme="dark"]{--bg:#2b1033;--dot:#431a4d;--ink:#ffe9f4;--card:#4a2056}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:"Kosugi Maru","Hiragino Maru Gothic ProN",system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:radial-gradient(var(--dot) 18%,transparent 20%);background-size:26px 26px;text-align:center;overflow-x:hidden}
+h1{font-family:"Mochiy Pop One","Hiragino Maru Gothic ProN",system-ui,sans-serif;font-weight:400;font-size:clamp(24px,7vw,38px);margin:14px 0 2px;color:var(--pink);text-shadow:3px 3px 0 var(--ink)}
+.wrap{max-width:520px;margin:0 auto;padding:0 14px 40px}
+.hud{display:flex;justify-content:space-between;gap:8px;margin:10px 0;font-weight:700}
+.hud span{flex:1;background:var(--sun);color:#4a1d3d;border:3px solid var(--ink);border-radius:14px;padding:6px 4px;font-size:15px}
+.box{position:relative;display:inline-block;border:3px solid var(--ink);border-radius:22px;box-shadow:6px 6px 0 var(--pink);overflow:hidden;line-height:0;background:#fff}
+canvas{touch-action:none;display:block}
+.ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(255,250,243,.9);color:#4a1d3d;line-height:1.4;padding:16px}
+.ov[hidden]{display:none}
+.ov b{font-family:"Mochiy Pop One",system-ui,sans-serif;font-weight:400;font-size:26px}
+button{font:inherit;font-weight:700;border:3px solid var(--ink);border-radius:14px;background:var(--sun);color:#4a1d3d;padding:12px 20px;cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+a{color:var(--ink);font-weight:700}
+p.h{font-size:14px;margin:12px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Onigiri-Fänger 🍙</h1>
+<div class="hud"><span>Punkte: <b id="sc">0</b></span><span id="lv">❤️❤️❤️❤️❤️</span><span>Rekord: <b id="hi">0</b></span></div>
+<div class="box">
+<canvas id="c" aria-label="Spielfeld"></canvas>
+<div class="ov" id="ov">
+<b id="ot">Bereit, Marco?</b>
+<div id="od">Fange 🍙 🥤 🍜 mit der Katze.<br>Weich der Chili 🌶️ aus!<br>Verpasste Snacks kosten ein Herz.</div>
+<button id="go">Los geht’s!</button>
+</div>
+</div>
+<p class="h">Steuerung: Finger oder Maus ziehen, oder Pfeiltasten / A und D.</p>
+<p class="h"><a href="index.html">← Zurück zum Countdown</a></p>
+</div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},cv=$("c"),cx=cv.getContext("2d"),W=320,H=420;
+var EM='"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
+var TYPES=[["🍙",1,0],["🍙",1,0],["🍙",1,0],["🥤",2,0],["🍜",3,0],["🌶️",0,1],["🌶️",0,1]];
+var s={run:false,px:160,dir:0,items:[],pops:[],score:0,lives:5,t:0,spawn:0,last:0};
+var hi=0;try{hi=parseInt(localStorage.getItem("onigiri-hi"),10)||0}catch(e){}
+$("hi").textContent=hi;
+function size(){W=Math.min(innerWidth-34,480);H=Math.max(300,Math.min(innerHeight*.6,560));var d=window.devicePixelRatio||1;cv.width=W*d;cv.height=H*d;cv.style.width=W+"px";cv.style.height=H+"px";cx.setTransform(d,0,0,d,0,0);s.px=Math.min(Math.max(s.px,30),W-30)}
+size();addEventListener("resize",size);
+function hud(){$("sc").textContent=s.score;$("lv").textContent=s.lives>0?"❤️".repeat(s.lives):"💔"}
+function start(){s.run=true;s.items=[];s.pops=[];s.score=0;s.lives=5;s.t=0;s.spawn=0;s.px=W/2;s.last=performance.now();$("ov").hidden=true;hud();requestAnimationFrame(loop)}
+function over(){s.run=false;var nw=s.score>hi;if(nw){hi=s.score;try{localStorage.setItem("onigiri-hi",hi)}catch(e){}}$("hi").textContent=hi;$("ot").textContent=nw?"Neuer Rekord! 🎉":"Game Over 🙈";$("od").innerHTML="Du hast <b style=\"font-size:20px\">"+s.score+"</b> Punkte geholt.";$("go").textContent="Nochmal!";$("ov").hidden=false}
+function lose(){s.lives--;hud();if(s.lives<=0)over()}
+function pop(x,y,t){s.pops.push({x:x,y:y,t:t,a:1})}
+function loop(now){
+if(!s.run)return;
+var dt=Math.min((now-s.last)/1000,.05);s.last=now;s.t+=dt;
+s.px=Math.min(Math.max(s.px+s.dir*380*dt,30),W-30);
+s.spawn-=dt;
+if(s.spawn<=0){var ty=TYPES[Math.floor(Math.random()*TYPES.length)];s.items.push({e:ty[0],p:ty[1],bad:ty[2],x:24+Math.random()*(W-48),y:-20,v:110+Math.min(s.t*3.2,170)+Math.random()*50});s.spawn=Math.max(.38,.95-s.t*.011)}
+var py=H-34;
+for(var i=s.items.length-1;i>=0;i--){var it=s.items[i];it.y+=it.v*dt;
+if(it.y>py-24&&it.y<py+16&&Math.abs(it.x-s.px)<36){
+s.items.splice(i,1);
+if(it.bad){pop(it.x,it.y,"Autsch!");lose()}else{s.score+=it.p;pop(it.x,it.y,"+"+it.p);hud()}
+}else if(it.y>H+10){s.items.splice(i,1);if(!it.bad){pop(it.x,H-20,"verpasst");lose()}}
+if(!s.run)break}
+for(var j=s.pops.length-1;j>=0;j--){var q=s.pops[j];q.y-=40*dt;q.a-=dt*1.4;if(q.a<=0)s.pops.splice(j,1)}
+draw();
+if(s.run)requestAnimationFrame(loop);
+}
+function draw(){
+var g=cx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#ffb3d6");g.addColorStop(1,"#fff2c2");cx.fillStyle=g;cx.fillRect(0,0,W,H);
+cx.fillStyle="#e8202f";cx.beginPath();cx.arc(W*.78,H*.2,Math.min(W,H)*.1,0,7);cx.fill();
+var by=H-22;cx.lineWidth=3;cx.strokeStyle="#4a1d3d";cx.fillStyle="#6c8cff";
+cx.beginPath();cx.moveTo(W*.1,by);cx.lineTo(W*.42,H*.45);cx.lineTo(W*.74,by);cx.closePath();cx.fill();cx.stroke();
+cx.fillStyle="#fff";cx.beginPath();cx.moveTo(W*.34,H*.55);cx.lineTo(W*.42,H*.45);cx.lineTo(W*.5,H*.55);cx.lineTo(W*.46,H*.53);cx.lineTo(W*.42,H*.57);cx.lineTo(W*.38,H*.53);cx.closePath();cx.fill();cx.stroke();
+cx.fillStyle="#7fe5c4";cx.fillRect(0,by,W,22);cx.beginPath();cx.moveTo(0,by);cx.lineTo(W,by);cx.stroke();
+cx.textAlign="center";cx.textBaseline="middle";
+cx.font="30px "+EM;
+s.items.forEach(function(it){cx.fillText(it.e,it.x,it.y)});
+cx.font="44px "+EM;cx.fillText("🐱",s.px,H-38);
+cx.font="700 16px sans-serif";
+s.pops.forEach(function(q){cx.globalAlpha=Math.max(q.a,0);cx.fillStyle="#4a1d3d";cx.fillText(q.t,q.x,q.y);cx.globalAlpha=1});
+}
+function mx(e){var r=cv.getBoundingClientRect();s.px=Math.min(Math.max((e.clientX-r.left)/r.width*W,30),W-30)}
+cv.addEventListener("pointerdown",function(e){mx(e)});
+cv.addEventListener("pointermove",function(e){if(s.run&&(e.buttons||e.pointerType==="touch"||e.pointerType==="mouse"))mx(e)});
+addEventListener("keydown",function(e){var k=e.key;if(k==="ArrowLeft"||k==="a"||k==="A"){s.dir=-1;e.preventDefault()}else if(k==="ArrowRight"||k==="d"||k==="D"){s.dir=1;e.preventDefault()}});
+addEventListener("keyup",function(e){var k=e.key;if(((k==="ArrowLeft"||k==="a"||k==="A")&&s.dir<0)||((k==="ArrowRight"||k==="d"||k==="D")&&s.dir>0))s.dir=0});
+$("go").onclick=start;
+draw();
+})();
+</script>
+</body>
+</html>
